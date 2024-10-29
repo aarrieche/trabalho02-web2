@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Atualizar Usuário</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Atualizar Usuário</h1>
+        <form action="/updateUser/<%= user.id %>" method="POST">
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" value="<%= user.nome %>" required>
+            </div>
+            <div class="form-group">
+                <label>CPF:</label>
+                <input type="text" value="<%= user.cpf %>" readonly>
+            </div>
+            <div class="form-group">
+                <label>Perfil:</label>
+                <input type="text" value="<%= user.perfil %>" readonly>
+            </div>
+
+            <h3>Telefones</h3>
+            <div id="telefones" class="dynamic-container">
+                <% telefones.forEach((telefone, index) => { %>
+                    <div class="dynamic-fields">
+                        <input type="text" name="telefones[<%= telefone.id %>][numero]" value="<%= telefone.telefone %>">
+                        <input type="radio" name="telefonePrincipal" value="<%= telefone.id %>" <%= telefone.principal ? 'checked' : '' %>>
+                        <label>Principal</label>
+                    </div>
+                <% }) %>
+            </div>
+            <button type="button" onclick="addTelefone()" class="small-button">Adicionar Telefone</button>
+
+            <h3>E-mails</h3>
+            <div id="emails" class="dynamic-container">
+                <% emails.forEach((email, index) => { %>
+                    <div class="dynamic-fields">
+                        <input type="email" name="emails[<%= email.id %>][endereco]" value="<%= email.email %>">
+                        <input type="radio" name="emailPrincipal" value="<%= email.id %>" <%= email.principal ? 'checked' : '' %>>
+                        <label>Principal</label>
+                    </div>
+                <% }) %>
+            </div>
+            <button type="button" onclick="addEmail()" class="small-button">Adicionar Email</button>
+
+            <button type="submit" class="button">Salvar Alterações</button>
+        </form>
+        <a href="/user/<%= user.id %>" class="button">Voltar</a>
+    </div>
+
+    <script>
+        function addTelefone() {
+            const container = document.getElementById('telefones');
+            const index = container.children.length;
+            container.insertAdjacentHTML('beforeend', `
+                <div class="dynamic-fields">
+                    <input type="text" name="telefones[novo_${index}][numero]" placeholder="Telefone">
+                    <input type="radio" name="telefonePrincipal" value="novo_${index}">
+                    <label>Principal</label>
+                </div>
+            `);
+        }
+
+        function addEmail() {
+            const container = document.getElementById('emails');
+            const index = container.children.length;
+            container.insertAdjacentHTML('beforeend', `
+                <div class="dynamic-fields">
+                    <input type="email" name="emails[novo_${index}][endereco]" placeholder="Email">
+                    <input type="radio" name="emailPrincipal" value="novo_${index}">
+                    <label>Principal</label>
+                </div>
+            `);
+        }
+    </script>
+</body>
+</html>

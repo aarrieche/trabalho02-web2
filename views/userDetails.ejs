@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Detalhes do Usuário</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Detalhes do Usuário</h1>
+        <p><strong>Nome:</strong> <%= user.nome %></p>
+        <p><strong>CPF:</strong> <%= user.cpf %></p>
+        <p><strong>Perfil:</strong> <%= user.perfil %></p>
+
+        <h3>Telefones</h3>
+        <ul>
+            <% telefones.forEach(telefone => { %>
+                <li><%= telefone.telefone %> <% if (telefone.principal) { %> (Principal) <% } %></li>
+            <% }) %>
+        </ul>
+
+        <h3>E-mails</h3>
+        <ul>
+            <% emails.forEach(email => { %>
+                <li><%= email.email %> <% if (email.principal) { %> (Principal) <% } %></li>
+            <% }) %>
+        </ul>
+
+        <a href="/updateUser/<%= user.id %>" class="button">Editar</a>
+        <a href="/users" class="button">Voltar à Listagem</a>
+    </div>
+</body>
+</html>

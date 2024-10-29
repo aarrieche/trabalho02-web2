@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Lista de Usuários</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Lista de Usuários</h1>
+        <form method="GET" action="/users">
+            <input type="text" name="nome" placeholder="Buscar por nome" value="<%= nome %>">
+            <button type="submit">Buscar</button>
+        </form>
+
+        <ul class="user-list">
+            <% users.forEach(user => { %>
+                <li>
+                    <span><%= user.nome %> - <%= user.cpf %></span>
+                    <div class="user-actions">
+                        <a href="/user/<%= user.id %>" class="button">Detalhes</a>
+                        <a href="/updateUser/<%= user.id %>" class="button">Editar</a>
+                        <a href="/deleteUser/<%= user.id %>" class="button" onclick="return confirm('Tem certeza?')">Deletar</a>
+                    </div>
+                </li>
+            <% }) %>
+        </ul>
+
+        <div class="pagination">
+            <% if (page > 1) { %>
+                <a href="/users?page=<%= page - 1 %>&nome=<%= nome %>" class="button small-button">Anterior</a>
+            <% } %>
+
+            <span>Página <%= page %> de <%= totalPages %></span>
+
+            <% if (page < totalPages) { %>
+                <a href="/users?page=<%= page + 1 %>&nome=<%= nome %>" class="button small-button">Próxima</a>
+            <% } %>
+        </div>
+
+        <a href="/addUser" class="button">Adicionar Novo Usuário</a>
+    </div>
+</body>
+</html>

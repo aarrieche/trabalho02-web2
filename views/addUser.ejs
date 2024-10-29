@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles/style.css">
+    <title>Adicionar Usuário</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Adicionar Usuário</h1>
+        <form action="/addUser" method="POST">
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" name="nome" required>
+            </div>
+            <div class="form-group">
+                <label>CPF:</label>
+                <input type="text" name="cpf" required>
+            </div>
+
+            <h3>Telefones</h3>
+            <div id="telefones" class="dynamic-container">
+                <div class="dynamic-fields">
+                    <input type="text" name="telefones[]" placeholder="Telefone" required>
+                    <input type="radio" name="telefonePrincipal" value="0" checked>
+                    <label>Principal</label>
+                </div>
+            </div>
+            <button type="button" onclick="addTelefone()" class="small-button">Adicionar Telefone</button>
+
+            <h3>E-mails</h3>
+            <div id="emails" class="dynamic-container">
+                <div class="dynamic-fields">
+                    <input type="email" name="emails[]" placeholder="Email" required>
+                    <input type="radio" name="emailPrincipal" value="0" checked>
+                    <label>Principal</label>
+                </div>
+            </div>
+            <button type="button" onclick="addEmail()" class="small-button">Adicionar Email</button>
+
+            <button type="submit" class="button">Cadastrar</button>
+        </form>
+        <a href="/users" class="button">Voltar</a>
+    </div>
+
+    <script>
+     
+        function addTelefone() {
+            const container = document.getElementById('telefones');
+            const index = container.children.length;
+            container.insertAdjacentHTML('beforeend', `
+                <div class="dynamic-fields">
+                    <input type="text" name="telefones[]" placeholder="Telefone">
+                    <input type="radio" name="telefonePrincipal" value="${index}">
+                    <label>Principal</label>
+                </div>
+            `);
+        }
+
+        function addEmail() {
+            const container = document.getElementById('emails');
+            const index = container.children.length;
+            container.insertAdjacentHTML('beforeend', `
+                <div class="dynamic-fields">
+                    <input type="email" name="emails[]" placeholder="Email">
+                    <input type="radio" name="emailPrincipal" value="${index}">
+                    <label>Principal</label>
+                </div>
+            `);
+        }
+    </script>
+</body>
+</html>
